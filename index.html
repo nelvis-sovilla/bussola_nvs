@@ -555,6 +555,12 @@
         canvas.height = size * dpr;
         ctx.scale(dpr, dpr);
 
+        // CALCOLO ANGOLO DI ROTAZIONE DEL NORD (CON INVERSIONE SOTTOSOPRA)
+        function getNorthRotation(headingToUse) {
+            const isScreenDown = phonePitch > 90;
+            return (isScreenDown ? headingToUse : -headingToUse) * RAD;
+        }
+
         // --- GESTIONE MODAL SELEZIONE STILE ---
         btnOpenStyles.addEventListener('click', () => {
             updateModalSelectionUI();
@@ -821,7 +827,7 @@
                 ctx.restore();
             }
 
-            // TESTO GUIDA (SENZA ICONA DEL TELEFONINO, SOLO TESTO)
+            // TESTO GUIDA (SENZA ICONA DEL TELEFONINO)
             if (distFromVertical < 20) {
                 const msgAlpha = 1 - compassOpacity;
                 if (msgAlpha > 0) {
@@ -847,7 +853,7 @@
 
             if (phoneHeading === null) return;
             const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
-            const northRotation = (-headingToUse) * RAD;
+            const northRotation = getNorthRotation(headingToUse);
 
             ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
             for (let a = 0; a < 360; a += 10) {
@@ -879,7 +885,7 @@
 
             if (phoneHeading === null) return;
             const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
-            const northRotation = (-headingToUse) * RAD;
+            const northRotation = getNorthRotation(headingToUse);
 
             ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
             for (let a = 0; a < 360; a += 10) {
@@ -915,7 +921,7 @@
 
             if (phoneHeading === null) return;
             const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
-            const northRotation = (-headingToUse) * RAD;
+            const northRotation = getNorthRotation(headingToUse);
 
             ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
             const dialR = thinInnerR - 4;
@@ -964,7 +970,7 @@
 
             if (phoneHeading === null) return;
             const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
-            const northRotation = (-headingToUse) * RAD;
+            const northRotation = getNorthRotation(headingToUse);
 
             ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
             for (let a = 0; a < 360; a += 10) {
@@ -998,7 +1004,7 @@
 
             if (phoneHeading === null) return;
             const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
-            const northRotation = (-headingToUse) * RAD;
+            const northRotation = getNorthRotation(headingToUse);
 
             ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
             for (let a = 0; a < 360; a += 15) {
@@ -1028,11 +1034,11 @@
 
             if (phoneHeading === null) return;
             const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
-            const northRotation = (-headingToUse) * RAD;
+            const northRotation = getNorthRotation(headingToUse);
 
             ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
 
-            const pointingAngleRad = headingToUse * RAD;
+            const pointingAngleRad = -northRotation;
             const absOffset = Math.abs(calibrationOffset);
             
             const gapDeg = isCalibrated ? Math.max(16, Math.min(90, absOffset * 2.5)) : 20;
@@ -1076,7 +1082,7 @@
 
             if (phoneHeading === null) return;
             const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
-            const northRotation = (-headingToUse) * RAD;
+            const northRotation = getNorthRotation(headingToUse);
 
             ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
 
@@ -1123,7 +1129,7 @@
 
             if (phoneHeading === null) return;
             const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
-            const northRotation = (-headingToUse) * RAD;
+            const northRotation = getNorthRotation(headingToUse);
 
             ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
             
