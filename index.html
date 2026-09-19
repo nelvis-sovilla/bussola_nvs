@@ -745,7 +745,7 @@
             const alpha = e.alpha * RAD; 
             const beta = (e.beta || 0) * RAD;
             
-            phonePitch = Math.abs(e.beta || 0); // Registra inclinazione per il fade in verticale
+            phonePitch = Math.abs(e.beta || 0);
 
             const East = -Math.sin(alpha) * Math.cos(beta);
             const North = Math.cos(alpha) * Math.cos(beta);
@@ -757,7 +757,8 @@
 
             if (activeAstro.visible && userCoords) btnCalibrate.disabled = false;
 
-            if (isCalibrated && phonePitch < 70) {
+            const distFromVertical = Math.abs(phonePitch - 90);
+            if (isCalibrated && distFromVertical >= 20) {
                 const currentCalibratedHeading = (phoneHeading + calibrationOffset + 360) % 360;
                 const northDiff = Math.abs((currentCalibratedHeading + 180) % 360 - 180);
                 if (northDiff <= 2.5) {
@@ -795,10 +796,11 @@
 
             ctx.clearRect(0, 0, width, height);
 
-            // GESTIONE DISSOLVENZA VERTICALE (OPZIONE B)
+            // CALCOLO OPACITÀ SIMMETRICO A $90^\circ$ (Riraggiunge il 100% se il telefono è sottosopra)
+            const distFromVertical = Math.abs(phonePitch - 90);
             let compassOpacity = 1.0;
-            if (phonePitch > 70) {
-                compassOpacity = Math.max(0, 1 - (phonePitch - 70) / 15); // Sfuma da 1 (a 70°) a 0 (a 85°)
+            if (distFromVertical < 20) {
+                compassOpacity = Math.max(0, (distFromVertical - 5) / 15);
             }
 
             if (compassOpacity > 0) {
@@ -819,21 +821,19 @@
                 ctx.restore();
             }
 
-            // GUIDA VISIVA "INCLINA IN ORIZZONTALE" QUANDO IL TELEFONO È TROPPO VERTICALE
-            if (phonePitch > 70) {
-                const msgAlpha = Math.min(1, (phonePitch - 70) / 15);
-                ctx.save();
-                ctx.globalAlpha = msgAlpha;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                
-                ctx.font = '32px sans-serif';
-                ctx.fillText('📱', center, center - 18);
-                
-                ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-main').trim() || '#ffffff';
-                ctx.font = 'bold 11px -apple-system, sans-serif';
-                ctx.fillText('INCLINA IN ORIZZONTALE', center, center + 22);
-                ctx.restore();
+            // TESTO GUIDA (SENZA ICONA DEL TELEFONINO, SOLO TESTO)
+            if (distFromVertical < 20) {
+                const msgAlpha = 1 - compassOpacity;
+                if (msgAlpha > 0) {
+                    ctx.save();
+                    ctx.globalAlpha = msgAlpha;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-main').trim() || '#ffffff';
+                    ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                    ctx.fillText('INCLINA IN ORIZZONTALE', center, center);
+                    ctx.restore();
+                }
             }
         }
 
@@ -903,7 +903,7 @@
             ctx.restore();
         }
 
-        // 3. NAUTICO (Simmetria geometrica Nord/Sud ripristinata)
+        // 3. NAUTICO (Ago Sud simmetrico)
         function drawStyleNautico(center, outerRadius, innerRadius) {
             const thinOuterR = outerRadius; const thinInnerR = outerRadius - 8;
             ctx.beginPath(); ctx.arc(center, center, thinOuterR, 0, 2 * Math.PI);
@@ -934,12 +934,12 @@
                 ctx.fillText(c.t, (dialR - 20) * Math.sin(c.a * RAD), -(dialR - 20) * Math.cos(c.a * RAD));
             });
 
-            // AGO NORD (Rosso e profilo oro)
+            // AGO NORD (Rosso e profilato in oro)
             ctx.beginPath(); ctx.moveTo(0, -(dialR - 22)); ctx.lineTo(-9, 0); ctx.lineTo(0, 0); ctx.closePath(); ctx.fillStyle = '#ef4444'; ctx.fill();
             ctx.beginPath(); ctx.moveTo(0, -(dialR - 22)); ctx.lineTo(9, 0); ctx.lineTo(0, 0); ctx.closePath(); ctx.fillStyle = '#dc2626'; ctx.fill();
             ctx.beginPath(); ctx.moveTo(0, -(dialR - 22)); ctx.lineTo(-9, 0); ctx.lineTo(9, 0); ctx.closePath(); ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 1.5; ctx.stroke();
 
-            // AGO SUD (Stesse identiche dimensioni geometriche dell'ago Nord per simmetria perfetta)
+            // AGO SUD (Stesse dimensioni dell'ago Nord)
             ctx.beginPath(); ctx.moveTo(0, (dialR - 22)); ctx.lineTo(-9, 0); ctx.lineTo(0, 0); ctx.closePath(); ctx.fillStyle = '#64748b'; ctx.fill();
             ctx.beginPath(); ctx.moveTo(0, (dialR - 22)); ctx.lineTo(9, 0); ctx.lineTo(0, 0); ctx.closePath(); ctx.fillStyle = '#475569'; ctx.fill();
             ctx.beginPath(); ctx.moveTo(0, (dialR - 22)); ctx.lineTo(-9, 0); ctx.lineTo(9, 0); ctx.closePath(); ctx.strokeStyle = 'rgba(217, 119, 6, 0.4)'; ctx.lineWidth = 1; ctx.stroke();
@@ -1020,7 +1020,7 @@
             ctx.restore();
         }
 
-        // 6. GHIERA SPEZZATA (Apertura al puntamento con ampiezza proporzionale all'offset)
+        // 6. GHIERA SPEZZATA
         function drawStyleGhieraSpezzata(center, outerRadius, innerRadius) {
             const ringThickness = 14; const ringR = outerRadius - ringThickness / 2 - 4;
             ctx.beginPath(); ctx.arc(center, center, outerRadius, 0, 2 * Math.PI); ctx.fillStyle = '#090d16'; ctx.fill();
