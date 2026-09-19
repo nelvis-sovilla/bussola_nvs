@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<!-- 
+  ===================================================================
+  BUSSOLA CELESTE PRO
+  Sviluppato da un'idea originale di Nelvis Sovilla.
+  Tutti i diritti sulla concezione del software sono riservati.
+  ===================================================================
+-->
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="author" content="Nelvis Sovilla">
+    <meta name="copyright" content="Nelvis Sovilla">
+    
+    <!-- ICONA PERSONALIZZATA VETTORIALE (SVG DATA-URI) PER ANDROID & PWA -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%230b0f19'/><circle cx='256' cy='256' r='200' fill='%231e293b' stroke='%2306b6d4' stroke-width='12'/><circle cx='256' cy='256' r='160' fill='%230f172a' stroke='%23334155' stroke-width='6'/><polygon points='256,90 220,256 256,236' fill='%23ef4444'/><polygon points='256,90 292,256 256,236' fill='%23b91c1c'/><polygon points='256,422 220,256 256,276' fill='%23cbd5e1'/><polygon points='256,422 292,256 256,276' fill='%2364748b'/><circle cx='256' cy='256' r='20' fill='%2306b6d4' stroke='%230f172a' stroke-width='6'/><circle cx='360' cy='150' r='22' fill='%23fbbf24'/></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%230b0f19'/><circle cx='256' cy='256' r='200' fill='%231e293b' stroke='%2306b6d4' stroke-width='12'/><circle cx='256' cy='256' r='160' fill='%230f172a' stroke='%23334155' stroke-width='6'/><polygon points='256,90 220,256 256,236' fill='%23ef4444'/><polygon points='256,90 292,256 256,236' fill='%23b91c1c'/><polygon points='256,422 220,256 256,276' fill='%23cbd5e1'/><polygon points='256,422 292,256 256,276' fill='%2364748b'/><circle cx='256' cy='256' r='20' fill='%2306b6d4' stroke='%230f172a' stroke-width='6'/><circle cx='360' cy='150' r='22' fill='%23fbbf24'/></svg>">
+
+    <!-- META TAGS PER SCHERMO INTERO (PWA / STANDALONE) -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0b0f19">
+
+    <!-- MANIFEST INLINE CON ICONA DEDICATA -->
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Bussola%20Celeste%22%2C%22short_name%22%3A%22Bussola%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22orientation%22%3A%22portrait%22%2C%22background_color%22%3A%22%230b0f19%22%2C%22theme_color%22%3A%22%230b0f19%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%3Butf8%2C%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20512%20512%27%3E%3Crect%20width%3D%27512%27%20height%3D%27512%27%20rx%3D%27110%27%20fill%3D%27%25230b0f19%27%2F%3E%3Ccircle%20cx%3D%27256%27%20cy%3D%27256%27%20r%3D%27200%27%20fill%3D%27%25231e293b%27%20stroke%3D%27%252306b6d4%27%20stroke-width%3D%2712%27%2F%3E%3Ccircle%20cx%3D%27256%27%20cy%3D%27256%27%20r%3D%27160%27%20fill%3D%27%25230f172a%27%20stroke%3D%27%2523334155%27%20stroke-width%3D%276%27%2F%3E%3Cpolygon%20points%3D%27256%2C90%20220%2C256%20256%2C236%27%20fill%3D%27%2523ef4444%27%2F%3E%3Cpolygon%20points%3D%27256%2C90%20292%2C256%20256%2C236%27%20fill%3D%27%2523b91c1c%27%2F%3E%3Cpolygon%20points%3D%27256%2C422%20220%2C256%20256%2C276%27%20fill%3D%27%2523cbd5e1%27%2F%3E%3Cpolygon%20points%3D%27256%2C422%20292%2C256%20256%2C276%27%20fill%3D%27%252364748b%27%2F%3E%3Ccircle%20cx%3D%27256%27%20cy%3D%27256%27%20r%3D%2720%27%20fill%3D%27%252306b6d4%27%20stroke%3D%27%25230f172a%27%20stroke-width%3D%276%27%2F%3E%3Ccircle%20cx%3D%27360%27%20cy%3D%27150%27%20r%3D%2722%27%20fill%3D%27%2523fbbf24%27%2F%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D">
+
+    <title>Bussola Celeste Pro</title>
+    <style>
+        :root {
+            --success-color: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.2);
+            --success-border: rgba(16, 185, 129, 0.4);
+            --wait-color: #fbbf24;
+            --wait-bg: rgba(251, 191, 36, 0.2);
+            --wait-border: rgba(251, 191, 36, 0.4);
+            --err-color: #ef4444;
+            --err-bg: rgba(239, 68, 68, 0.2);
+            --err-border: rgba(239, 68, 68, 0.4);
+            --card-border-style: solid;
+        }
+
+        /* TEMI DINAMICI - VARIABILI CSS COORDINATE */
+        body[data-theme="vivace"] {
+            --bg-radial: radial-gradient(circle at top, #142818 0%, #050b06 100%);
+            --card-bg: rgba(12, 26, 15, 0.85); --card-border: rgba(34, 197, 94, 0.25);
+            --text-main: #f0fdf4; --text-sub: #86efac; --accent-primary: #22c55e; --accent-gold: #f59e0b;
+            --btn-color: #22c55e; --btn-border: rgba(34, 197, 94, 0.3); --btn-border-style: solid;
+        }
+
+        body[data-theme="minimalista"] {
+            --bg-radial: #000000;
+            --card-bg: #111111; --card-border: #262626;
+            --text-main: #d4d4d4; --text-sub: #737373; 
+            --accent-primary: #d4d4d4; --accent-gold: #fbbf24;
+            --btn-color: #d4d4d4; --btn-border: rgba(255, 255, 255, 0.2); --btn-border-style: solid;
+        }
+
+        body[data-theme="nautico"] {
+            --bg-radial: radial-gradient(circle at top, #1e293b 0%, #090d16 100%);
+            --card-bg: rgba(30, 41, 59, 0.85); --card-border: rgba(217, 119, 6, 0.35);
+            --text-main: #fef3c7; --text-sub: #cbd5e1; --accent-primary: #d97706; --accent-gold: #fbbf24;
+            --btn-color: #fef3c7; --btn-border: rgba(217, 119, 6, 0.3); --btn-border-style: solid;
+        }
+
+        body[data-theme="pastello"] {
+            --bg-radial: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+            --card-bg: rgba(30, 41, 59, 0.75); --card-border: rgba(148, 163, 184, 0.25);
+            --text-main: #f8fafc; --text-sub: #cbd5e1; --accent-primary: #6ee7b7; --accent-gold: #fde68a;
+            --btn-color: #6ee7b7; --btn-border: rgba(110, 231, 183, 0.3); --btn-border-style: solid;
+        }
+
+        body[data-theme="neon"] {
+            --bg-radial: radial-gradient(circle at top, #1c0828 0%, #05020a 100%);
+            --card-bg: rgba(25, 10, 36, 0.85); --card-border: rgba(217, 70, 239, 0.3);
+            --text-main: #fdf4ff; --text-sub: #f5d0fe; --accent-primary: #d946ef; --accent-gold: #facc15;
+            --btn-color: #06b6d4; --btn-border: rgba(6, 182, 212, 0.3); --btn-border-style: solid;
+        }
+
+        body[data-theme="ghieraspezzata"] {
+            --bg-radial: radial-gradient(circle at top, #1e293b 0%, #0b0f19 100%);
+            --card-bg: rgba(22, 29, 45, 0.75); --card-border: rgba(6, 182, 212, 0.25);
+            --text-main: #f0f4f8; --text-sub: #94a3b8; --accent-primary: #06b6d4; --accent-gold: #fbbf24;
+            --btn-color: #06b6d4; --btn-border: rgba(6, 182, 212, 0.3); --btn-border-style: solid;
+        }
+
+        body[data-theme="origami"] {
+            --bg-radial: radial-gradient(circle at top, #1f2937 0%, #030712 100%);
+            --card-bg: rgba(17, 24, 39, 0.85); --card-border: rgba(75, 85, 99, 0.3);
+            --text-main: #d1d5db; --text-sub: #6b7280; 
+            --accent-primary: #d1d5db; --accent-gold: #fbbf24;
+            --btn-color: #d1d5db; --btn-border: rgba(255, 255, 255, 0.2); --btn-border-style: solid;
+        }
+
+        body[data-theme="nothing"] {
+            --bg-radial: #000000;
+            --card-bg: #0a0a0a; --card-border: #1f1f1f;
+            --text-main: #c4c4c4; --text-sub: #525252; 
+            --accent-primary: #ef4444; --accent-gold: #ffffff;
+            --btn-color: #ef4444; --btn-border: rgba(239, 68, 68, 0.4); --btn-border-style: dashed;
+            
+            --success-color: #ffffff;
+            --success-bg: rgba(255, 255, 255, 0.1);
+            --success-border: rgba(255, 255, 255, 0.4);
+            
+            --wait-color: #a3a3a3;
+            --wait-bg: rgba(255, 255, 255, 0.05);
+            --wait-border: rgba(255, 255, 255, 0.2);
+            
+            --card-border-style: dashed;
+        }
+
+        :root {
+            --accent-red: #ef4444;
+            --success-color: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            margin: 0;
+            height: 100dvh;
+            max-height: 100dvh;
+            overflow: hidden;
+            
+            padding: 6px 12px;
+            padding-top: max(6px, env(safe-area-inset-top));
+            padding-bottom: max(6px, env(safe-area-inset-bottom));
+            
+            background: var(--bg-radial);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s ease;
+        }
+
+        header {
+            width: 100%;
+            max-width: 380px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2px;
+            flex-shrink: 0;
+        }
+
+        h1 {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .btn-fullscreen {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px var(--card-border-style) var(--card-border);
+            color: var(--text-main);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .status-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px var(--card-border-style) var(--card-border);
+            border-radius: 12px;
+            padding: 6px 12px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            flex-shrink: 1;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2px;
+            font-size: 0.78rem;
+        }
+
+        .row:last-child {
+            margin-bottom: 0;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 1px 7px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-ok { background: var(--success-bg); color: var(--success-color); border: 1px var(--card-border-style) var(--success-border); }
+        .badge-wait { background: var(--wait-bg); color: var(--wait-color); border: 1px var(--card-border-style) var(--wait-border); }
+        .badge-err { background: var(--err-bg); color: var(--err-color); border: 1px var(--card-border-style) var(--err-border); }
+
+        .astro-info-text {
+            color: var(--accent-primary);
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-top: 1px;
+            text-align: center;
+            min-height: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 310px;
+            height: 310px;
+            margin: 2px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        canvas {
+            width: 310px;
+            height: 310px;
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.6));
+        }
+
+        .hud-value {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* GHOST BUTTON PER CALIBRAZIONE */
+        .btn-main {
+            width: 100%;
+            max-width: 380px;
+            min-height: 40px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            touch-action: manipulation;
+            margin-bottom: 2px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--btn-color);
+            border: 1px var(--btn-border-style) var(--btn-border);
+            flex-shrink: 0;
+        }
+
+        .btn-main:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-main:disabled {
+            background: transparent;
+            color: #475569;
+            border-color: rgba(255, 255, 255, 0.05);
+            border-style: var(--card-border-style);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* FOOTER & SELETTORE STILE */
+        .footer-bar {
+            width: 100%;
+            max-width: 380px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0px;
+            padding-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .btn-style-trigger {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px var(--card-border-style) var(--card-border);
+            color: var(--text-main);
+            font-size: 0.68rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 3px 8px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-style-trigger:active {
+            transform: scale(0.95);
+        }
+
+        .footer-credit {
+            font-size: 0.65rem;
+            color: var(--text-sub);
+            font-style: italic;
+            letter-spacing: 0.3px;
+            transition: color 0.3s ease;
+        }
+
+        /* SCHERMATA SELEZIONE STILE (MODAL) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(8, 11, 18, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: var(--card-bg);
+            border: 1px var(--card-border-style) var(--card-border);
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 360px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px var(--card-border-style) var(--card-border);
+        }
+
+        .modal-header h2 {
+            font-size: 0.95rem;
+            margin: 0;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-close-modal {
+            background: rgba(255,255,255,0.05);
+            border: none;
+            color: var(--text-main);
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .style-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .style-option-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px var(--card-border-style) var(--card-border);
+            padding: 12px 14px;
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: capitalize;
+        }
+
+        .style-option-btn.selected {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .style-option-btn:active {
+            transform: scale(0.98);
+        }
+
+        hr {
+            border: none;
+            border-top: 1px var(--card-border-style) var(--card-border);
+            margin: 4px 0;
+            transition: border-color 0.3s ease;
+        }
+    </style>
+</head>
+<body data-theme="vivace">
+
+    <header>
+        <h1>Bussola Celeste Pro</h1>
+        <button id="btn-fullscreen" class="btn-fullscreen">⛶ Schermo Intero</button>
+    </header>
+
+    <!-- SCHEDA GPS & ASTRO -->
+    <div class="status-card">
+        <div class="row">
+            <span><strong>GPS:</strong> <span id="gps-city" style="color: var(--accent-primary); font-weight: 600;"></span></span>
+            <span id="gps-status" class="badge badge-wait">In attesa...</span>
+        </div>
+        <div class="row" style="font-size: 0.72rem; color: var(--text-sub);">
+            <span>Coordinate:</span>
+            <span id="gps-coords" class="hud-value">Lat: --, Lon: --</span>
+        </div>
+        <hr>
+        <div class="row">
+            <span>Astro Guida: <strong id="astro-name" style="color: var(--accent-gold);">--</strong></span>
+            <span style="font-size: 0.78rem;">Az: <span id="astro-azimuth" class="hud-value">--</span>°</span>
+        </div>
+        <div id="astro-msg" class="astro-info-text">Calcolo meccanica celeste...</div>
+    </div>
+
+    <!-- QUADRANTE BUSSOLA -->
+    <div class="canvas-container">
+        <canvas id="compassCanvas"></canvas>
+    </div>
+
+    <!-- PULSANTE CALIBRAZIONE ATTENUATO (GHOST BUTTON) -->
+    <button id="btn-calibrate" class="btn-main" disabled>CALIBRA SULL'ASTRO</button>
+
+    <!-- SCHEDA STRUMENTAZIONE -->
+    <div class="status-card">
+        <div class="row">
+            <span>Stato Calibrazione:</span>
+            <span id="cal-status" class="badge badge-err">NON CALIBRATO</span>
+        </div>
+        <hr>
+        <div class="row">
+            <span>Direzione Freccia:</span>
+            <span class="hud-value"><span id="raw-heading">--</span>°</span>
+        </div>
+        <div class="row">
+            <span>Offset Calibrazione:</span>
+            <span class="hud-value"><span id="cal-offset">--</span>°</span>
+        </div>
+    </div>
+
+    <!-- FOOTER CON SELETTORE STILE A SINISTRA DELLA FIRMA -->
+    <div class="footer-bar">
+        <button id="btn-open-styles" class="btn-style-trigger">Stile</button>
+        <div class="footer-credit">sviluppato da un'idea di Nelvis Sovilla</div>
+    </div>
+
+    <!-- SCHERMATA SELEZIONE STILE (MODAL OVERLAY) -->
+    <div id="modal-styles" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Scegli Stile Bussola</h2>
+                <button id="btn-close-modal" class="btn-close-modal">✕</button>
+            </div>
+            <div class="style-grid">
+                <button class="style-option-btn" onclick="selectCompassStyle('vivace')">vivace</button>
+                <button class="style-option-btn" onclick="selectCompassStyle('minimalista')">minimalista</button>
+                <button class="style-option-btn" onclick="selectCompassStyle('nautico')">nautico</button>
+                <button class="style-option-btn" onclick="selectCompassStyle('pastello')">pastello</button>
+                <button class="style-option-btn" onclick="selectCompassStyle('neon')">neon</button>
+                <button class="style-option-btn" onclick="selectCompassStyle('ghieraspezzata')">ghiera spezzata</button>
+                <button class="style-option-btn" onclick="selectCompassStyle('origami')">origami</button>
+                <button class="style-option-btn" onclick="selectCompassStyle('nothing')">nothing</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* 
+         * BUSSOLA CELESTE PRO
+         * Idea originale e Progetto: Nelvis Sovilla
+         * Firma Digitale / Author Signature: Nelvis Sovilla
+         */
+        console.log("%cBussola Celeste Pro%c - Sviluppato da un'idea di Nelvis Sovilla", "color: #06b6d4; font-size: 14px; font-weight: bold;", "color: #fbbf24; font-size: 12px;");
+
+        // --- COSTANTI & STATO ---
+        const RAD = Math.PI / 180;
+        const DEG = 180 / Math.PI;
+
+        let userCoords = null;
+        let phoneHeading = null;
+        let phonePitch = 0; // Traccia l'inclinazione verticale (beta)
+        let activeAstro = { name: 'Nessuno', azimuth: 0, altitude: -90, visible: false };
+        let calibrationOffset = 0;
+        let isCalibrated = false;
+        let lastVibrationTime = 0;
+
+        // Recupero stile salvato in memoria locale (Default: 'vivace')
+        let currentCompassStyle = localStorage.getItem('compass_style') || 'vivace';
+        
+        if (currentCompassStyle === 'tactical') currentCompassStyle = 'vivace';
+        if (currentCompassStyle === 'oled') currentCompassStyle = 'minimalista';
+
+        document.body.setAttribute('data-theme', currentCompassStyle);
+
+        // DOM
+        const gpsStatusEl = document.getElementById('gps-status');
+        const gpsCityEl = document.getElementById('gps-city');
+        const gpsCoordsEl = document.getElementById('gps-coords');
+        const astroNameEl = document.getElementById('astro-name');
+        const astroAzimuthEl = document.getElementById('astro-azimuth');
+        const astroMsgEl = document.getElementById('astro-msg');
+        const rawHeadingEl = document.getElementById('raw-heading');
+        const calOffsetEl = document.getElementById('cal-offset');
+        const calStatusEl = document.getElementById('cal-status');
+        const btnCalibrate = document.getElementById('btn-calibrate');
+        const btnFullscreen = document.getElementById('btn-fullscreen');
+        const btnOpenStyles = document.getElementById('btn-open-styles');
+        const btnCloseModal = document.getElementById('btn-close-modal');
+        const modalStyles = document.getElementById('modal-styles');
+        const canvas = document.getElementById('compassCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // High-DPI Canvas Scaling
+        const dpr = window.devicePixelRatio || 1;
+        const size = 310;
+        canvas.width = size * dpr;
+        canvas.height = size * dpr;
+        ctx.scale(dpr, dpr);
+
+        // --- GESTIONE MODAL SELEZIONE STILE ---
+        btnOpenStyles.addEventListener('click', () => {
+            updateModalSelectionUI();
+            modalStyles.classList.add('active');
+        });
+
+        btnCloseModal.addEventListener('click', () => {
+            modalStyles.classList.remove('active');
+        });
+
+        function selectCompassStyle(styleKey) {
+            currentCompassStyle = styleKey;
+            localStorage.setItem('compass_style', styleKey);
+            document.body.setAttribute('data-theme', styleKey);
+            updateModalSelectionUI();
+            modalStyles.classList.remove('active');
+            drawCompass();
+        }
+
+        function updateModalSelectionUI() {
+            document.querySelectorAll('.style-option-btn').forEach(btn => {
+                if (btn.getAttribute('onclick').includes(`'${currentCompassStyle}'`)) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+        }
+
+        // --- GESTIONE SCHERMO INTERO ---
+        btnFullscreen.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().then(() => {
+                    btnFullscreen.innerText = 'Exit';
+                }).catch(() => {});
+            } else {
+                document.exitFullscreen().then(() => {
+                    btnFullscreen.innerText = '⛶ Schermo Intero';
+                });
+            }
+        });
+
+        // --- MOTORE ASTRONOMICO NATIVO ---
+        function getJulianDate(date) {
+            return (date.getTime() / 86400000) + 2440587.5;
+        }
+
+        function calculateSun(date, lat, lon) {
+            const d = getJulianDate(date) - 2451545.0;
+            const g = (357.528 + 0.9856003 * d) % 360;
+            const q = (280.460 + 0.9856474 * d) % 360;
+            const L = (q + 1.915 * Math.sin(g * RAD) + 0.020 * Math.sin(2 * g * RAD)) % 360;
+            const e = 23.439 - 0.0000004 * d;
+            const ra = Math.atan2(Math.cos(e * RAD) * Math.sin(L * RAD), Math.cos(L * RAD)) * DEG;
+            const dec = Math.asin(Math.sin(e * RAD) * Math.sin(L * RAD)) * DEG;
+            const gmst = (18.697374558 + 24.06570982441908 * d) % 24;
+            const lst = (gmst * 15 + lon) % 360;
+            const ha = (lst - ra + 360) % 360;
+            const hRad = Math.asin(Math.sin(lat * RAD) * Math.sin(dec * RAD) + Math.cos(lat * RAD) * Math.cos(dec * RAD) * Math.cos(ha * RAD));
+            let az = Math.atan2(-Math.sin(ha * RAD), Math.tan(dec * RAD) * Math.cos(lat * RAD) - Math.sin(lat * RAD) * Math.cos(ha * RAD)) * DEG;
+            return { azimuth: (az + 360) % 360, altitude: hRad * DEG };
+        }
+
+        function calculateMoon(date, lat, lon) {
+            const d = getJulianDate(date) - 2451545.0;
+            const L = (218.316 + 13.176396 * d) % 360;
+            const M = (134.963 + 13.064993 * d) % 360;
+            const F = (93.272 + 13.229350 * d) % 360;
+            const lRad = (L + 6.289 * Math.sin(M * RAD)) * RAD;
+            const bRad = (5.128 * Math.sin(F * RAD)) * RAD;
+            const eRad = (23.439 - 0.0000004 * d) * RAD;
+            const sinDec = Math.sin(bRad) * Math.cos(eRad) + Math.cos(bRad) * Math.sin(eRad) * Math.sin(lRad);
+            const dec = Math.asin(sinDec) * DEG;
+            const y = Math.sin(lRad) * Math.cos(eRad) - Math.tan(bRad) * Math.sin(eRad);
+            const x = Math.cos(lRad);
+            const ra = Math.atan2(y, x) * DEG;
+            const gmst = (18.697374558 + 24.06570982441908 * d) % 24;
+            const lst = (gmst * 15 + lon) % 360;
+            const ha = (lst - ra + 360) % 360;
+            const hRad = Math.asin(Math.sin(lat * RAD) * Math.sin(dec * RAD) + Math.cos(lat * RAD) * Math.cos(dec * RAD) * Math.cos(ha * RAD));
+            let az = Math.atan2(-Math.sin(ha * RAD), Math.tan(dec * RAD) * Math.cos(lat * RAD) - Math.sin(lat * RAD) * Math.cos(ha * RAD)) * DEG;
+            return { azimuth: (az + 360) % 360, altitude: hRad * DEG };
+        }
+
+        function findNextRiseTime(lat, lon) {
+            const now = new Date();
+            const sunRise = scanRise(now, lat, lon, calculateSun, -0.83);
+            const moonRise = scanRise(now, lat, lon, calculateMoon, 0);
+
+            if (sunRise && moonRise) {
+                return sunRise < moonRise ? { name: 'Sole ☀️', time: sunRise } : { name: 'Luna 🌙', time: moonRise };
+            } else if (sunRise) {
+                return { name: 'Sole ☀️', time: sunRise };
+            } else if (moonRise) {
+                return { name: 'Luna 🌙', time: moonRise };
+            }
+            return null;
+        }
+
+        function scanRise(startDate, lat, lon, calcFn, horizonAngle) {
+            let t = new Date(startDate.getTime());
+            for (let i = 0; i < 144; i++) {
+                let tNext = new Date(t.getTime() + 10 * 60 * 1000);
+                if (calcFn(t, lat, lon).altitude <= horizonAngle && calcFn(tNext, lat, lon).altitude > horizonAngle) {
+                    let low = t.getTime(), high = tNext.getTime();
+                    while (high - low > 60000) {
+                        let mid = Math.floor((low + high) / 2);
+                        if (calcFn(new Date(mid), lat, lon).altitude > horizonAngle) high = mid;
+                        else low = mid;
+                    }
+                    return new Date(high);
+                }
+                t = tNext;
+            }
+            return null;
+        }
+
+        function updateAstroPositions() {
+            if (!userCoords) return;
+            const now = new Date();
+            const sun = calculateSun(now, userCoords.latitude, userCoords.longitude);
+            const moon = calculateMoon(now, userCoords.latitude, userCoords.longitude);
+
+            if (sun.altitude > -0.83) {
+                activeAstro = { name: 'Sole ☀️', azimuth: sun.azimuth, altitude: sun.altitude, visible: true };
+                astroMsgEl.innerText = "Sole visibile in cielo.";
+            } else if (moon.altitude > 0) {
+                activeAstro = { name: 'Luna 🌙', azimuth: moon.azimuth, altitude: moon.altitude, visible: true };
+                astroMsgEl.innerText = "Luna visibile in cielo.";
+            } else {
+                activeAstro = { name: 'Nessuno', azimuth: 0, altitude: -90, visible: false };
+                const nextRise = findNextRiseTime(userCoords.latitude, userCoords.longitude);
+                if (nextRise) {
+                    const timeStr = nextRise.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    astroMsgEl.innerText = `Prossimo astro: ${nextRise.name} sorge alle ${timeStr}`;
+                } else {
+                    astroMsgEl.innerText = "Nessun astro visibile al momento.";
+                }
+            }
+
+            astroNameEl.innerText = activeAstro.name;
+            astroAzimuthEl.innerText = activeAstro.visible ? activeAstro.azimuth.toFixed(1) : "--";
+            btnCalibrate.disabled = !activeAstro.visible || phoneHeading === null;
+            
+            if (phoneHeading !== null) drawCompass();
+        }
+
+        // --- GEOLOCALIZZAZIONE & REVERSE GEOCODING ---
+        function initGPS() {
+            if (!("geolocation" in navigator)) {
+                gpsStatusEl.className = "badge badge-err";
+                gpsStatusEl.innerText = "NO GPS";
+                return;
+            }
+            navigator.geolocation.watchPosition(
+                (pos) => {
+                    userCoords = pos.coords;
+                    gpsStatusEl.className = "badge badge-ok"; gpsStatusEl.innerText = "OK";
+                    gpsCoordsEl.innerText = `${userCoords.latitude.toFixed(3)}°, ${userCoords.longitude.toFixed(3)}°`;
+                    fetchCityName(userCoords.latitude, userCoords.longitude);
+                    updateAstroPositions();
+                },
+                (err) => {
+                    gpsStatusEl.className = "badge badge-err"; gpsStatusEl.innerText = "ERRORE GPS";
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        }
+
+        function fetchCityName(lat, lon) {
+            fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=it`)
+                .then(res => res.json()).then(data => {
+                    const city = data.city || data.locality || data.principalSubdivision || "";
+                    if (city) gpsCityEl.innerText = `(${city})`;
+                }).catch(() => {
+                    fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
+                        .then(res => res.json()).then(data => {
+                            const addr = data.address || {};
+                            const city = addr.city || addr.town || addr.village || addr.municipality || addr.county || "";
+                            if (city) gpsCityEl.innerText = `(${city})`;
+                        }).catch(() => {});
+                });
+        }
+
+        // --- ORIENTAMENTO SENSORI ---
+        function handleOrientation(e) {
+            if (e.alpha === null) return;
+            const alpha = e.alpha * RAD; 
+            const beta = (e.beta || 0) * RAD;
+            
+            phonePitch = Math.abs(e.beta || 0); // Registra inclinazione per il fade in verticale
+
+            const East = -Math.sin(alpha) * Math.cos(beta);
+            const North = Math.cos(alpha) * Math.cos(beta);
+            let heading = Math.atan2(East, North) * DEG;
+            if (heading < 0) heading += 360;
+
+            phoneHeading = heading;
+            rawHeadingEl.innerText = phoneHeading.toFixed(1);
+
+            if (activeAstro.visible && userCoords) btnCalibrate.disabled = false;
+
+            if (isCalibrated && phonePitch < 70) {
+                const currentCalibratedHeading = (phoneHeading + calibrationOffset + 360) % 360;
+                const northDiff = Math.abs((currentCalibratedHeading + 180) % 360 - 180);
+                if (northDiff <= 2.5) {
+                    const now = Date.now();
+                    if (now - lastVibrationTime > 1200) {
+                        if ("vibrate" in navigator) navigator.vibrate(90);
+                        lastVibrationTime = now;
+                    }
+                }
+            }
+            drawCompass();
+        }
+
+        function initSensors() {
+            if (window.DeviceOrientationEvent) window.addEventListener('deviceorientation', handleOrientation);
+        }
+
+        // --- CALIBRAZIONE ---
+        btnCalibrate.addEventListener('click', () => {
+            if (phoneHeading === null || !activeAstro.visible) return;
+            let rawDiff = activeAstro.azimuth - phoneHeading;
+            calibrationOffset = ((rawDiff + 180) % 360 + 360) % 360 - 180;
+            isCalibrated = true;
+            const sign = calibrationOffset >= 0 ? "+" : "";
+            calOffsetEl.innerText = sign + calibrationOffset.toFixed(1);
+            calStatusEl.className = "badge badge-ok"; calStatusEl.innerText = "CALIBRATO";
+            if ("vibrate" in navigator) navigator.vibrate([40, 60, 40]);
+            drawCompass();
+        });
+
+        // --- DISPATCHER E RENDERING 8 STILI BUSSOLA ---
+        function drawCompass() {
+            const width = size; const height = size; const center = width / 2;
+            const outerRadius = center - 10; const innerRadius = outerRadius - 28;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // GESTIONE DISSOLVENZA VERTICALE (OPZIONE B)
+            let compassOpacity = 1.0;
+            if (phonePitch > 70) {
+                compassOpacity = Math.max(0, 1 - (phonePitch - 70) / 15); // Sfuma da 1 (a 70°) a 0 (a 85°)
+            }
+
+            if (compassOpacity > 0) {
+                ctx.save();
+                ctx.globalAlpha = compassOpacity;
+
+                switch(currentCompassStyle) {
+                    case 'vivace': drawStyleVivace(center, outerRadius, innerRadius); break;
+                    case 'minimalista': drawStyleMinimalista(center, outerRadius, innerRadius); break;
+                    case 'nautico': drawStyleNautico(center, outerRadius, innerRadius); break;
+                    case 'pastello': drawStylePastello(center, outerRadius, innerRadius); break;
+                    case 'neon': drawStyleNeon(center, outerRadius, innerRadius); break;
+                    case 'ghieraspezzata': drawStyleGhieraSpezzata(center, outerRadius, innerRadius); break;
+                    case 'origami': drawStyleOrigami(center, outerRadius, innerRadius); break;
+                    case 'nothing': drawStyleNothing(center, outerRadius, innerRadius); break;
+                    default: drawStyleVivace(center, outerRadius, innerRadius); break;
+                }
+                ctx.restore();
+            }
+
+            // GUIDA VISIVA "INCLINA IN ORIZZONTALE" QUANDO IL TELEFONO È TROPPO VERTICALE
+            if (phonePitch > 70) {
+                const msgAlpha = Math.min(1, (phonePitch - 70) / 15);
+                ctx.save();
+                ctx.globalAlpha = msgAlpha;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                ctx.font = '32px sans-serif';
+                ctx.fillText('📱', center, center - 18);
+                
+                ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--text-main').trim() || '#ffffff';
+                ctx.font = 'bold 11px -apple-system, sans-serif';
+                ctx.fillText('INCLINA IN ORIZZONTALE', center, center + 22);
+                ctx.restore();
+            }
+        }
+
+        // 1. VIVACE
+        function drawStyleVivace(center, outerRadius, innerRadius) {
+            ctx.beginPath(); ctx.arc(center, center, outerRadius, 0, 2 * Math.PI); ctx.fillStyle = '#08120a'; ctx.fill();
+            ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 2.5; ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(center - 12, center); ctx.lineTo(center + 12, center); ctx.strokeStyle = 'rgba(34, 197, 94, 0.4)'; ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(center, center - 12); ctx.lineTo(center, center + 12); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(center, 2); ctx.lineTo(center - 7, 18); ctx.lineTo(center + 7, 18); ctx.closePath(); ctx.fillStyle = '#22c55e'; ctx.fill();
+
+            if (phoneHeading === null) return;
+            const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
+            const northRotation = (-headingToUse) * RAD;
+
+            ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
+            for (let a = 0; a < 360; a += 10) {
+                const isMaj = a % 30 === 0;
+                ctx.beginPath(); ctx.moveTo(innerRadius * Math.sin(a * RAD), -innerRadius * Math.cos(a * RAD));
+                ctx.lineTo((innerRadius - (isMaj ? 10 : 5)) * Math.sin(a * RAD), -(innerRadius - (isMaj ? 10 : 5)) * Math.cos(a * RAD));
+                ctx.strokeStyle = '#22c55e'; ctx.lineWidth = isMaj ? 2 : 1; ctx.stroke();
+            }
+            const cardinals = [{t:'N',a:0,c:'#f59e0b'}, {t:'E',a:90,c:'#22c55e'}, {t:'S',a:180,c:'#22c55e'}, {t:'W',a:270,c:'#22c55e'}];
+            cardinals.forEach(c => {
+                ctx.fillStyle = c.c; ctx.font = 'bold 14px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(c.t, (innerRadius - 20) * Math.sin(c.a * RAD), -(innerRadius - 20) * Math.cos(c.a * RAD));
+            });
+            ctx.beginPath(); ctx.moveTo(0, -(innerRadius - 28)); ctx.lineTo(-5, 0); ctx.lineTo(5, 0); ctx.closePath(); ctx.fillStyle = '#f59e0b'; ctx.fill();
+
+            if (activeAstro.visible) {
+                ctx.save(); ctx.rotate(activeAstro.azimuth * RAD);
+                ctx.beginPath(); ctx.arc(0, -(innerRadius - 8), 8, 0, 2 * Math.PI);
+                ctx.fillStyle = activeAstro.name.includes('Sole') ? '#fbbf24' : '#c084fc'; ctx.fill(); ctx.restore();
+            }
+            ctx.restore();
+        }
+
+        // 2. MINIMALISTA
+        function drawStyleMinimalista(center, outerRadius, innerRadius) {
+            ctx.beginPath(); ctx.arc(center, center, outerRadius, 0, 2 * Math.PI); ctx.fillStyle = '#000000'; ctx.fill();
+            ctx.strokeStyle = '#333333'; ctx.lineWidth = 1; ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(center, 4); ctx.lineTo(center - 6, 16); ctx.lineTo(center + 6, 16); ctx.closePath(); ctx.fillStyle = '#d4d4d4'; ctx.fill();
+
+            if (phoneHeading === null) return;
+            const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
+            const northRotation = (-headingToUse) * RAD;
+
+            ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
+            for (let a = 0; a < 360; a += 10) {
+                const isMaj = a % 30 === 0;
+                ctx.beginPath(); ctx.moveTo(innerRadius * Math.sin(a * RAD), -innerRadius * Math.cos(a * RAD));
+                ctx.lineTo((innerRadius - (isMaj ? 8 : 4)) * Math.sin(a * RAD), -(innerRadius - (isMaj ? 8 : 4)) * Math.cos(a * RAD));
+                ctx.strokeStyle = isMaj ? 'rgba(255,255,255,0.6)' : 'rgba(255,255,255,0.3)'; ctx.lineWidth = isMaj ? 1.5 : 0.8; ctx.stroke();
+            }
+            const cardinals = [{t:'N',a:0,c:'#ef4444'}, {t:'E',a:90,c:'#888888'}, {t:'S',a:180,c:'#888888'}, {t:'W',a:270,c:'#888888'}];
+            cardinals.forEach(c => {
+                ctx.fillStyle = c.c; ctx.font = '13px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(c.t, (innerRadius - 18) * Math.sin(c.a * RAD), -(innerRadius - 18) * Math.cos(c.a * RAD));
+            });
+            ctx.beginPath(); ctx.moveTo(0, -(innerRadius - 26)); ctx.lineTo(-4, 0); ctx.lineTo(4, 0); ctx.closePath(); ctx.fillStyle = '#ef4444'; ctx.fill();
+
+            if (activeAstro.visible) {
+                ctx.save(); ctx.rotate(activeAstro.azimuth * RAD);
+                ctx.beginPath(); ctx.arc(0, -(innerRadius - 6), 6, 0, 2 * Math.PI);
+                ctx.fillStyle = activeAstro.name.includes('Sole') ? '#fbbf24' : '#c084fc'; ctx.fill(); ctx.restore();
+            }
+            ctx.restore();
+        }
+
+        // 3. NAUTICO (Simmetria geometrica Nord/Sud ripristinata)
+        function drawStyleNautico(center, outerRadius, innerRadius) {
+            const thinOuterR = outerRadius; const thinInnerR = outerRadius - 8;
+            ctx.beginPath(); ctx.arc(center, center, thinOuterR, 0, 2 * Math.PI);
+            const g = ctx.createRadialGradient(center, center, thinInnerR, center, center, thinOuterR);
+            g.addColorStop(0, '#d97706'); g.addColorStop(0.5, '#b45309'); g.addColorStop(1, '#78350f');
+            ctx.fillStyle = g; ctx.fill(); ctx.strokeStyle = '#fef3c7'; ctx.lineWidth = 1.5; ctx.stroke();
+            ctx.beginPath(); ctx.arc(center, center, thinInnerR, 0, 2 * Math.PI); ctx.fillStyle = '#0f172a'; ctx.fill();
+            ctx.beginPath(); ctx.moveTo(center, 2); ctx.lineTo(center - 8, 18); ctx.lineTo(center + 8, 18); ctx.closePath(); ctx.fillStyle = '#fef3c7'; ctx.fill();
+
+            if (phoneHeading === null) return;
+            const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
+            const northRotation = (-headingToUse) * RAD;
+
+            ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
+            const dialR = thinInnerR - 4;
+            for (let a = 0; a < 360; a += 5) {
+                const isMaj = a % 30 === 0;
+                ctx.beginPath(); ctx.moveTo(dialR * Math.sin(a * RAD), -dialR * Math.cos(a * RAD));
+                ctx.lineTo((dialR - (isMaj ? 10 : 5)) * Math.sin(a * RAD), -(dialR - (isMaj ? 10 : 5)) * Math.cos(a * RAD));
+                ctx.strokeStyle = '#fef3c7'; ctx.lineWidth = isMaj ? 2 : 1; ctx.stroke();
+            }
+            
+            const cardinals = [{t:'N',a:0,c:'#ef4444'}, {t:'E',a:90,c:'#fef3c7'}, {t:'S',a:180,c:'#94a3b8'}, {t:'W',a:270,c:'#fef3c7'}];
+            cardinals.forEach(c => {
+                ctx.fillStyle = c.c; 
+                ctx.font = c.t === 'N' ? 'bold 17px Arial, "Inter", sans-serif' : 'bold 14px Arial, "Inter", sans-serif'; 
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(c.t, (dialR - 20) * Math.sin(c.a * RAD), -(dialR - 20) * Math.cos(c.a * RAD));
+            });
+
+            // AGO NORD (Rosso e profilo oro)
+            ctx.beginPath(); ctx.moveTo(0, -(dialR - 22)); ctx.lineTo(-9, 0); ctx.lineTo(0, 0); ctx.closePath(); ctx.fillStyle = '#ef4444'; ctx.fill();
+            ctx.beginPath(); ctx.moveTo(0, -(dialR - 22)); ctx.lineTo(9, 0); ctx.lineTo(0, 0); ctx.closePath(); ctx.fillStyle = '#dc2626'; ctx.fill();
+            ctx.beginPath(); ctx.moveTo(0, -(dialR - 22)); ctx.lineTo(-9, 0); ctx.lineTo(9, 0); ctx.closePath(); ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 1.5; ctx.stroke();
+
+            // AGO SUD (Stesse identiche dimensioni geometriche dell'ago Nord per simmetria perfetta)
+            ctx.beginPath(); ctx.moveTo(0, (dialR - 22)); ctx.lineTo(-9, 0); ctx.lineTo(0, 0); ctx.closePath(); ctx.fillStyle = '#64748b'; ctx.fill();
+            ctx.beginPath(); ctx.moveTo(0, (dialR - 22)); ctx.lineTo(9, 0); ctx.lineTo(0, 0); ctx.closePath(); ctx.fillStyle = '#475569'; ctx.fill();
+            ctx.beginPath(); ctx.moveTo(0, (dialR - 22)); ctx.lineTo(-9, 0); ctx.lineTo(9, 0); ctx.closePath(); ctx.strokeStyle = 'rgba(217, 119, 6, 0.4)'; ctx.lineWidth = 1; ctx.stroke();
+
+            // Perno centrale
+            ctx.beginPath(); ctx.arc(0, 0, 5, 0, 2*Math.PI); ctx.fillStyle = '#fbbf24'; ctx.fill();
+            ctx.beginPath(); ctx.arc(0, 0, 2, 0, 2*Math.PI); ctx.fillStyle = '#ef4444'; ctx.fill();
+
+            if (activeAstro.visible) {
+                ctx.save(); ctx.rotate(activeAstro.azimuth * RAD);
+                ctx.beginPath(); ctx.arc(0, -(dialR - 8), 8, 0, 2 * Math.PI);
+                ctx.fillStyle = activeAstro.name.includes('Sole') ? '#fbbf24' : '#cbd5e1'; ctx.fill(); ctx.restore();
+            }
+            ctx.restore();
+        }
+
+        // 4. PASTELLO
+        function drawStylePastello(center, outerRadius, innerRadius) {
+            ctx.beginPath(); ctx.arc(center, center, outerRadius, 0, 2 * Math.PI); ctx.fillStyle = '#0f172a'; ctx.fill();
+            ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1; ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(center, 4); ctx.lineTo(center - 6, 16); ctx.lineTo(center + 6, 16); ctx.closePath(); ctx.fillStyle = '#6ee7b7'; ctx.fill();
+
+            if (phoneHeading === null) return;
+            const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
+            const northRotation = (-headingToUse) * RAD;
+
+            ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
+            for (let a = 0; a < 360; a += 10) {
+                const isMaj = a % 30 === 0;
+                ctx.beginPath(); ctx.moveTo(innerRadius * Math.sin(a * RAD), -innerRadius * Math.cos(a * RAD));
+                ctx.lineTo((innerRadius - (isMaj ? 8 : 4)) * Math.sin(a * RAD), -(innerRadius - (isMaj ? 8 : 4)) * Math.cos(a * RAD));
+                ctx.strokeStyle = isMaj ? '#cbd5e1' : '#475569'; ctx.lineWidth = isMaj ? 1.5 : 0.8; ctx.stroke();
+            }
+            const cardinals = [{t:'N',a:0,c:'#fca5a5'}, {t:'E',a:90,c:'#c4b5fd'}, {t:'S',a:180,c:'#c4b5fd'}, {t:'W',a:270,c:'#c4b5fd'}];
+            cardinals.forEach(c => {
+                ctx.fillStyle = c.c; ctx.font = 'bold 14px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(c.t, (innerRadius - 18) * Math.sin(c.a * RAD), -(innerRadius - 18) * Math.cos(c.a * RAD));
+            });
+            ctx.beginPath(); ctx.moveTo(0, -(innerRadius - 26)); ctx.lineTo(-4, 0); ctx.lineTo(4, 0); ctx.closePath(); ctx.fillStyle = '#fca5a5'; ctx.fill();
+
+            if (activeAstro.visible) {
+                ctx.save(); ctx.rotate(activeAstro.azimuth * RAD);
+                ctx.beginPath(); ctx.arc(0, -(innerRadius - 6), 7, 0, 2 * Math.PI);
+                ctx.fillStyle = activeAstro.name.includes('Sole') ? '#fde68a' : '#c4b5fd'; ctx.fill(); ctx.restore();
+            }
+            ctx.restore();
+        }
+
+        // 5. NEON
+        function drawStyleNeon(center, outerRadius, innerRadius) {
+            ctx.beginPath(); ctx.arc(center, center, outerRadius, 0, 2 * Math.PI); ctx.fillStyle = '#05020a'; ctx.fill();
+            ctx.strokeStyle = '#d946ef'; ctx.lineWidth = 2; ctx.stroke();
+            ctx.beginPath(); ctx.arc(center, center, innerRadius - 18, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#06b6d4'; ctx.lineWidth = 1; ctx.setLineDash([6, 3]); ctx.stroke(); ctx.setLineDash([]);
+            ctx.beginPath(); ctx.moveTo(center, 0); ctx.lineTo(center - 10, 18); ctx.lineTo(center + 10, 18); ctx.closePath(); ctx.fillStyle = '#06b6d4'; ctx.fill();
+
+            if (phoneHeading === null) return;
+            const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
+            const northRotation = (-headingToUse) * RAD;
+
+            ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
+            for (let a = 0; a < 360; a += 15) {
+                ctx.beginPath(); ctx.moveTo(innerRadius * Math.sin(a * RAD), -innerRadius * Math.cos(a * RAD));
+                ctx.lineTo((innerRadius - 10) * Math.sin(a * RAD), -(innerRadius - 10) * Math.cos(a * RAD));
+                ctx.strokeStyle = '#d946ef'; ctx.lineWidth = 1.8; ctx.stroke();
+            }
+            const cardinals = [{t:'N',a:0,c:'#f43f5e'}, {t:'E',a:90,c:'#22d3ee'}, {t:'S',a:180,c:'#22d3ee'}, {t:'W',a:270,c:'#22d3ee'}];
+            cardinals.forEach(c => {
+                ctx.fillStyle = c.c; ctx.font = 'bold 15px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(c.t, (innerRadius - 24) * Math.sin(c.a * RAD), -(innerRadius - 24) * Math.cos(c.a * RAD));
+            });
+
+            if (activeAstro.visible) {
+                ctx.save(); ctx.rotate(activeAstro.azimuth * RAD);
+                ctx.beginPath(); ctx.arc(0, -(innerRadius - 8), 8, 0, 2 * Math.PI);
+                ctx.fillStyle = activeAstro.name.includes('Sole') ? '#facc15' : '#c084fc'; ctx.fill(); ctx.restore();
+            }
+            ctx.restore();
+        }
+
+        // 6. GHIERA SPEZZATA (Apertura al puntamento con ampiezza proporzionale all'offset)
+        function drawStyleGhieraSpezzata(center, outerRadius, innerRadius) {
+            const ringThickness = 14; const ringR = outerRadius - ringThickness / 2 - 4;
+            ctx.beginPath(); ctx.arc(center, center, outerRadius, 0, 2 * Math.PI); ctx.fillStyle = '#090d16'; ctx.fill();
+            ctx.beginPath(); ctx.moveTo(center, 2); ctx.lineTo(center - 8, 20); ctx.lineTo(center + 8, 20); ctx.closePath(); ctx.fillStyle = '#06b6d4'; ctx.fill();
+
+            if (phoneHeading === null) return;
+            const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
+            const northRotation = (-headingToUse) * RAD;
+
+            ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
+
+            const pointingAngleRad = headingToUse * RAD;
+            const absOffset = Math.abs(calibrationOffset);
+            
+            const gapDeg = isCalibrated ? Math.max(16, Math.min(90, absOffset * 2.5)) : 20;
+            const gapAngle = gapDeg * RAD;
+
+            ctx.beginPath();
+            ctx.arc(0, 0, ringR, pointingAngleRad + gapAngle/2, pointingAngleRad + 2*Math.PI - gapAngle/2);
+            ctx.strokeStyle = '#1e293b'; ctx.lineWidth = ringThickness; ctx.stroke();
+            ctx.strokeStyle = '#06b6d4'; ctx.lineWidth = 2; ctx.stroke();
+
+            for (let a = 0; a < 360; a += 10) {
+                const diff = Math.abs((a * RAD - pointingAngleRad + 3*Math.PI) % (2*Math.PI) - Math.PI);
+                if (diff < gapAngle / 2) continue;
+
+                const isMaj = a % 30 === 0;
+                const rIn = ringR - ringThickness/2; const rOut = ringR + ringThickness/2;
+                ctx.beginPath(); ctx.moveTo(rIn * Math.sin(a * RAD), -rIn * Math.cos(a * RAD)); ctx.lineTo(rOut * Math.sin(a * RAD), -rOut * Math.cos(a * RAD));
+                ctx.strokeStyle = isMaj ? '#38bdf8' : 'rgba(56, 189, 248, 0.4)'; ctx.lineWidth = isMaj ? 2 : 1; ctx.stroke();
+            }
+
+            const cardinals = [{t:'N',a:0,c:'#ef4444'}, {t:'E',a:90,c:'#f8fafc'}, {t:'S',a:180,c:'#f8fafc'}, {t:'W',a:270,c:'#f8fafc'}];
+            cardinals.forEach(c => {
+                ctx.fillStyle = c.c; ctx.font = 'bold 14px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(c.t, (ringR - 24) * Math.sin(c.a * RAD), -(ringR - 24) * Math.cos(c.a * RAD));
+            });
+
+            if (activeAstro.visible) {
+                ctx.save(); ctx.rotate(activeAstro.azimuth * RAD);
+                ctx.beginPath(); ctx.arc(0, -ringR, 10, 0, 2 * Math.PI);
+                ctx.fillStyle = activeAstro.name.includes('Sole') ? '#fbbf24' : '#c084fc'; ctx.fill();
+                ctx.strokeStyle = '#06b6d4'; ctx.lineWidth = 2; ctx.stroke();
+                ctx.restore();
+            }
+            ctx.restore();
+        }
+
+        // 7. ORIGAMI
+        function drawStyleOrigami(center, outerRadius, innerRadius) {
+            const r = outerRadius - 10;
+            ctx.beginPath(); ctx.arc(center, center, outerRadius, 0, 2 * Math.PI); ctx.fillStyle = '#030712'; ctx.fill();
+
+            if (phoneHeading === null) return;
+            const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
+            const northRotation = (-headingToUse) * RAD;
+
+            ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
+
+            for (let i = 0; i < 8; i++) {
+                const a1 = (i * 45) * RAD; const a2 = ((i + 1) * 45) * RAD; const isNorth = i === 0 || i === 7;
+                ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(r * Math.sin(a1), -r * Math.cos(a1));
+                ctx.lineTo((r * 0.5) * Math.sin((a1 + a2)/2), -(r * 0.5) * Math.cos((a1 + a2)/2)); ctx.closePath();
+                ctx.fillStyle = isNorth ? (i % 2 === 0 ? '#651221' : '#3f0a14') : (i % 2 === 0 ? '#1e293b' : '#334155');
+                ctx.fill(); ctx.strokeStyle = '#020617'; ctx.lineWidth = 1; ctx.stroke();
+            }
+
+            const cardinals = [{t:'N',a:0,c:'#d1d5db'}, {t:'E',a:90,c:'#777777'}, {t:'S',a:180,c:'#777777'}, {t:'W',a:270,c:'#777777'}];
+            cardinals.forEach(c => {
+                ctx.fillStyle = c.c; ctx.font = 'bold 15px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(c.t, (r - 20) * Math.sin(c.a * RAD), -(r - 20) * Math.cos(c.a * RAD));
+            });
+
+            if (activeAstro.visible) {
+                ctx.save(); ctx.rotate(activeAstro.azimuth * RAD);
+                ctx.beginPath(); ctx.arc(0, -r, 9, 0, 2 * Math.PI);
+                ctx.fillStyle = activeAstro.name.includes('Sole') ? '#fbbf24' : '#c084fc'; ctx.fill(); ctx.restore();
+            }
+            ctx.restore();
+        }
+
+        // 8. NOTHING STYLE
+        function drawStyleNothing(center, outerRadius, innerRadius) {
+            ctx.beginPath(); ctx.arc(center, center, outerRadius, 0, 2 * Math.PI); ctx.fillStyle = '#050505'; ctx.fill();
+
+            for(let i=0; i<size; i+=12) {
+                for(let j=0; j<size; j+=12) {
+                    if (Math.hypot(i-center, j-center) < outerRadius - 4) {
+                        ctx.fillStyle = 'rgba(255,255,255,0.03)'; ctx.beginPath(); ctx.arc(i, j, 1, 0, 2*Math.PI); ctx.fill();
+                    }
+                }
+            }
+
+            ctx.beginPath(); ctx.arc(center, center, innerRadius + 18, 0, 2 * Math.PI); 
+            ctx.fillStyle = '#0a0a0a'; 
+            ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 15; ctx.fill(); ctx.shadowBlur = 0;
+            ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1; ctx.stroke();
+
+            ctx.beginPath(); ctx.arc(center, 12, 3.5, 0, 2*Math.PI); ctx.fillStyle = '#ef4444'; ctx.fill();
+
+            if (phoneHeading === null) return;
+            const headingToUse = isCalibrated ? (phoneHeading + calibrationOffset + 360) % 360 : phoneHeading;
+            const northRotation = (-headingToUse) * RAD;
+
+            ctx.save(); ctx.translate(center, center); ctx.rotate(northRotation);
+            
+            ctx.beginPath(); ctx.arc(0, 0, innerRadius + 12, 0, 2*Math.PI);
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.setLineDash([2, 4]); ctx.stroke(); ctx.setLineDash([]);
+
+            for (let a = 0; a < 360; a += 5) {
+                const isMaj = a % 30 === 0;
+                ctx.beginPath(); ctx.arc((innerRadius) * Math.sin(a * RAD), -(innerRadius) * Math.cos(a * RAD), isMaj ? 2 : 1, 0, 2*Math.PI);
+                ctx.fillStyle = isMaj ? '#e5e5e5' : '#555555'; ctx.fill();
+            }
+
+            const cardinals = [{t:'N',a:0,c:'#ef4444'}, {t:'E',a:90,c:'#888888'}, {t:'S',a:180,c:'#888888'}, {t:'W',a:270,c:'#888888'}];
+            cardinals.forEach(c => {
+                ctx.fillStyle = c.c; ctx.font = 'bold 15px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(c.t, (innerRadius - 18) * Math.sin(c.a * RAD), -(innerRadius - 18) * Math.cos(c.a * RAD));
+            });
+
+            ctx.beginPath(); ctx.arc(0,0, 2, 0, 2*Math.PI); ctx.fillStyle='#ffffff'; ctx.fill();
+            ctx.beginPath(); ctx.arc(0, -(innerRadius - 32), 2, 0, 2*Math.PI); ctx.fillStyle='#ef4444'; ctx.fill();
+
+            if (activeAstro.visible) {
+                ctx.save(); ctx.rotate(activeAstro.azimuth * RAD);
+                ctx.beginPath(); ctx.arc(0, -(innerRadius - 4), 6, 0, 2 * Math.PI); 
+                ctx.strokeStyle = activeAstro.name.includes('Sole') ? '#ffffff' : '#94a3b8'; 
+                ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.beginPath(); ctx.arc(0, -(innerRadius - 4), 2, 0, 2*Math.PI); 
+                ctx.fillStyle = '#ef4444'; ctx.fill();
+                ctx.restore();
+            }
+            ctx.restore();
+        }
+
+        // Avvio
+        initGPS();
+        initSensors();
+        setInterval(updateAstroPositions, 10000);
+    </script>
+</body>
+</html>
